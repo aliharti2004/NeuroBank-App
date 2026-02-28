@@ -1,0 +1,96 @@
+/* FORCE HORIZONTAL SCROLL - SOLUTION FINALE */
+
+.table-scroll-container {
+    display: block;
+    width: 100%;
+    overflow-x: scroll !important;
+    overflow-y: visible !important;
+    -webkit-overflow-scrolling: touch;
+    margin: 0;
+    padding: 0;
+}
+
+.table-scroll-container::-webkit-scrollbar {
+    height: 12px;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.table-scroll-container::-webkit-scrollbar-thumb {
+    background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+    border-radius: 6px;
+}
+
+.table-scroll-container::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(90deg, #2563eb, #7c3aed);
+}
+
+.table-scroll-container .requests-table {
+    min-width: 2400px !important;
+    width: 2400px !important;
+    display: table;
+    table-layout: fixed;
+    border-collapse: collapse;
+}
+
+.table-scroll-container .requests-table th,
+.table-scroll-container .requests-table td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Largeurs colonnes fixes */
+.table-scroll-container .requests-table th:nth-child(1),
+.table-scroll-container .requests-table td:nth-child(1) {
+    width: 120px;
+}
+
+/* ID */
+.table-scroll-container .requests-table th:nth-child(2),
+.table-scroll-container .requests-table td:nth-child(2) {
+    width: 180px;
+}
+
+/* DATE */
+.table-scroll-container .requests-table th:nth-child(3),
+.table-scroll-container .requests-table td:nth-child(3) {
+    width: 160px;
+}
+
+/* CLIENT */
+.table-scroll-container .requests-table th:nth-child(4),
+.table-scroll-container .requests-table td:nth-child(4) {
+    width: 180px;
+}
+
+/* TYPE */
+.table-scroll-container .requests-table th:nth-child(5),
+.table-scroll-container .requests-table td:nth-child(5) {
+    width: 180px;
+}
+
+/* MONTANT */
+.table-scroll-container .requests-table th:nth-child(6),
+.table-scroll-container .requests-table td:nth-child(6) {
+    width: 140px;
+}
+
+/* DURÉE */
+.table-scroll-container .requests-table th:nth-child(7),
+.table-scroll-container .requests-table td:nth-child(7) {
+    width: 200px;
+}
+
+/* SCORE IA */
+.table-scroll-container .requests-table th:nth-child(8),
+.table-scroll-container .requests-table td:nth-child(8) {
+    width: 180px;
+}
+
+/* STATUT */
+.table-scroll-container .requests-table th:nth-child(9),
+.table-scroll-container .requests-table td:nth-child(9) {
+    width: 460px;
+}
+
+/* ACTIONS */

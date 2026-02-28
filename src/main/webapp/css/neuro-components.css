@@ -1,0 +1,589 @@
+/**
+ * NEUROBANK DESIGN SYSTEM - COMPONENTS
+ * Reusable UI Components
+ * Version: 1.0
+ */
+
+/* ============================================
+   BUTTONS
+   ============================================ */
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    padding: 0.625rem 1.25rem;
+    font-family: var(--font-sans);
+    font-size: var(--text-base);
+    font-weight: var(--font-medium);
+    line-height: 1.5;
+    text-align: center;
+    text-decoration: none;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    user-select: none;
+    border: 1px solid transparent;
+    border-radius: var(--radius-md);
+    transition: all var(--transition-base);
+    outline: none;
+}
+
+.btn:focus {
+    outline: 2px solid var(--neuro-blue);
+    outline-offset: 2px;
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* Button Variants */
+.btn-primary {
+    background: var(--neuro-blue);
+    color: white;
+    border-color: var(--neuro-blue);
+}
+
+.btn-primary:hover {
+    background: var(--neuro-blue-dark);
+    border-color: var(--neuro-blue-dark);
+}
+
+.btn-secondary {
+    background: var(--neuro-bg-tertiary);
+    color: var(--neuro-text-primary);
+    border-color: var(--neuro-border);
+}
+
+.btn-secondary:hover {
+    background: var(--neuro-bg-hover);
+}
+
+.btn-success {
+    background: var(--neuro-success);
+    color: white;
+    border-color: var(--neuro-success);
+}
+
+.btn-success:hover {
+    background: #059669;
+}
+
+.btn-danger {
+    background: var(--neuro-danger);
+    color: white;
+    border-color: var(--neuro-danger);
+}
+
+.btn-danger:hover {
+    background: #dc2626;
+}
+
+.btn-ghost {
+    background: transparent;
+    color: var(--neuro-text-secondary);
+    border-color: transparent;
+}
+
+.btn-ghost:hover {
+    background: var(--neuro-bg-tertiary);
+    color: var(--neuro-text-primary);
+}
+
+.btn-outline {
+    background: transparent;
+    color: var(--neuro-blue);
+    border-color: var(--neuro-blue);
+}
+
+.btn-outline:hover {
+    background: var(--neuro-info-bg);
+}
+
+/* Button Sizes */
+.btn-sm {
+    padding: 0.375rem 0.875rem;
+    font-size: var(--text-sm);
+}
+
+.btn-lg {
+    padding: 0.875rem 1.75rem;
+    font-size: var(--text-lg);
+}
+
+.btn-icon {
+    padding: 0.625rem;
+    width: 2.5rem;
+    height: 2.5rem;
+}
+
+.btn-block {
+    display: flex;
+    width: 100%;
+}
+
+/* ============================================
+   CARDS
+   ============================================ */
+
+.neuro-card {
+    background: var(--neuro-bg-secondary);
+    border: 1px solid var(--neuro-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    box-shadow: var(--shadow-md);
+    transition: all var(--transition-base);
+}
+
+.neuro-card:hover {
+    border-color: var(--neuro-border-light);
+    box-shadow: var(--shadow-lg);
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-md);
+}
+
+.card-header h3 {
+    font-size: var(--text-lg);
+    color: var(--neuro-text-primary);
+    margin: 0;
+}
+
+.card-body {
+    color: var(--neuro-text-secondary);
+}
+
+.card-footer {
+    margin-top: var(--space-md);
+    padding-top: var(--space-md);
+    border-top: 1px solid var(--neuro-border);
+}
+
+/* Metric Card Variant */
+.metric-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.metric-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-md);
+}
+
+.metric-title {
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    color: var(--neuro-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.metric-value {
+    font-size: var(--text-3xl);
+    font-weight: var(--font-bold);
+    color: var(--neuro-text-primary);
+    margin: var(--space-sm) 0;
+}
+
+.metric-trend {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-full);
+}
+
+.metric-trend.positive {
+    background: var(--neuro-success-bg);
+    color: var(--neuro-success);
+}
+
+.metric-trend.negative {
+    background: var(--neuro-danger-bg);
+    color: var(--neuro-danger);
+}
+
+.metric-chart {
+    margin-top: var(--space-md);
+    height: 60px;
+}
+
+/* AI Insight Card */
+.ai-insight-card {
+    background: linear-gradient(135deg, var(--neuro-bg-secondary) 0%, #1a2147 100%);
+    border: 1px solid var(--neuro-purple);
+    position: relative;
+    overflow: hidden;
+}
+
+.ai-insight-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--neuro-purple), var(--neuro-blue));
+}
+
+.ai-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: 0.375rem 0.75rem;
+    background: var(--neuro-purple);
+    color: white;
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    border-radius: var(--radius-full);
+    margin-bottom: var(--space-md);
+}
+
+.ai-visual {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: var(--space-lg) 0;
+}
+
+.ai-message {
+    color: var(--neuro-text-primary);
+    font-size: var(--text-base);
+    line-height: var(--leading-relaxed);
+}
+
+.ai-score {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    margin-top: var(--space-md);
+    padding: var(--space-md);
+    background: var(--neuro-bg-tertiary);
+    border-radius: var(--radius-md);
+}
+
+/* ============================================
+   BADGES
+   ============================================ */
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.25rem 0.625rem;
+    font-size: var(--text-xs);
+    font-weight: var(--font-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+    border-radius: var(--radius-full);
+    white-space: nowrap;
+}
+
+.badge-success {
+    background: var(--neuro-success-bg);
+    color: var(--neuro-success);
+}
+
+.badge-warning {
+    background: var(--neuro-warning-bg);
+    color: var(--neuro-warning);
+}
+
+.badge-danger {
+    background: var(--neuro-danger-bg);
+    color: var(--neuro-danger);
+}
+
+.badge-info {
+    background: var(--neuro-info-bg);
+    color: var(--neuro-info);
+}
+
+.badge-neutral {
+    background: var(--neuro-bg-tertiary);
+    color: var(--neuro-text-secondary);
+}
+
+/* ============================================
+   FORMS
+   ============================================ */
+
+.form-group {
+    margin-bottom: var(--space-lg);
+}
+
+.form-label {
+    display: block;
+    margin-bottom: var(--space-sm);
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    color: var(--neuro-text-secondary);
+}
+
+.form-input,
+.form-select,
+.form-textarea {
+    display: block;
+    width: 100%;
+    padding: 0.625rem 1rem;
+    font-family: var(--font-sans);
+    font-size: var(--text-base);
+    line-height: 1.5;
+    color: var(--neuro-text-primary);
+    background-color: var(--neuro-bg-tertiary);
+    border: 1px solid var(--neuro-border);
+    border-radius: var(--radius-md);
+    transition: all var(--transition-base);
+    outline: none;
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+    border-color: var(--neuro-border-focus);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.form-input::placeholder,
+.form-textarea::placeholder {
+    color: var(--neuro-text-muted);
+}
+
+.form-input:disabled,
+.form-select:disabled,
+.form-textarea:disabled {
+    background-color: var(--neuro-bg-secondary);
+    color: var(--neuro-text-disabled);
+    cursor: not-allowed;
+}
+
+.form-textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.form-select {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%2394a3b8' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 0.5rem center;
+    background-repeat: no-repeat;
+    background-size: 1.5em 1.5em;
+    padding-right: 2.5rem;
+    appearance: none;
+}
+
+.form-help {
+    display: block;
+    margin-top: var(--space-xs);
+    font-size: var(--text-sm);
+    color: var(--neuro-text-muted);
+}
+
+.form-error {
+    display: block;
+    margin-top: var(--space-xs);
+    font-size: var(--text-sm);
+    color: var(--neuro-danger);
+}
+
+.form-checkbox,
+.form-radio {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    cursor: pointer;
+}
+
+.form-checkbox input,
+.form-radio input {
+    width: 1.125rem;
+    height: 1.125rem;
+    cursor: pointer;
+}
+
+/* ============================================
+   TABLES
+   ============================================ */
+
+.neuro-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--neuro-bg-secondary);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+}
+
+.neuro-table thead {
+    background: var(--neuro-bg-tertiary);
+}
+
+.neuro-table th {
+    padding: var(--space-md) var(--space-lg);
+    text-align: left;
+    font-size: var(--text-xs);
+    font-weight: var(--font-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--neuro-text-secondary);
+    border-bottom: 1px solid var(--neuro-border);
+}
+
+.neuro-table td {
+    padding: var(--space-md) var(--space-lg);
+    font-size: var(--text-sm);
+    color: var(--neuro-text-primary);
+    border-bottom: 1px solid var(--neuro-border);
+    vertical-align: middle;
+}
+
+.neuro-table tbody tr {
+    transition: background-color var(--transition-fast);
+}
+
+.neuro-table tbody tr:hover {
+    background: var(--neuro-bg-tertiary);
+}
+
+.neuro-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* ============================================
+   ALERTS
+   ============================================ */
+
+.alert {
+    padding: var(--space-md);
+    border-radius: var(--radius-md);
+    border-left: 4px solid;
+    margin-bottom: var(--space-md);
+}
+
+.alert-success {
+    background: var(--neuro-success-bg);
+    border-color: var(--neuro-success);
+    color: var(--neuro-success);
+}
+
+.alert-warning {
+    background: var(--neuro-warning-bg);
+    border-color: var(--neuro-warning);
+    color: var(--neuro-warning);
+}
+
+.alert-danger {
+    background: var(--neuro-danger-bg);
+    border-color: var(--neuro-danger);
+    color: var(--neuro-danger);
+}
+
+.alert-info {
+    background: var(--neuro-info-bg);
+    border-color: var(--neuro-info);
+    color: var(--neuro-info);
+}
+
+/* ============================================
+   PROGRESS BARS
+   ============================================ */
+
+.progress {
+    height: 8px;
+    background: var(--neuro-bg-tertiary);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    background: var(--neuro-blue);
+    border-radius: var(--radius-full);
+    transition: width var(--transition-slow);
+}
+
+.progress-bar.success {
+    background: var(--neuro-success);
+}
+
+.progress-bar.warning {
+    background: var(--neuro-warning);
+}
+
+.progress-bar.danger {
+    background: var(--neuro-danger);
+}
+
+/* ============================================
+   TOOLTIPS
+   ============================================ */
+
+[data-tooltip] {
+    position: relative;
+    cursor: help;
+}
+
+[data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-8px);
+    padding: 0.5rem 0.75rem;
+    background: var(--neuro-bg-primary);
+    color: var(--neuro-text-primary);
+    font-size: var(--text-sm);
+    white-space: nowrap;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--transition-base);
+    z-index: var(--z-tooltip);
+}
+
+[data-tooltip]:hover::after {
+    opacity: 1;
+}
+
+/* ============================================
+   LOADING SPINNER
+   ============================================ */
+
+.spinner {
+    display: inline-block;
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 3px solid var(--neuro-bg-tertiary);
+    border-top-color: var(--neuro-blue);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.spinner-sm {
+    width: 1rem;
+    height: 1rem;
+    border-width: 2px;
+}
+
+.spinner-lg {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-width: 4px;
+}

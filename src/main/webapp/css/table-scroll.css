@@ -1,0 +1,134 @@
+/* ========================================
+   TABLE HORIZONTAL SCROLL - GLOBAL STYLES
+   ======================================== */
+
+/* Apply to all table containers in the app */
+.section,
+.table-container {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+}
+
+/* Custom scrollbar for tables */
+.section::-webkit-scrollbar,
+.table-container::-webkit-scrollbar {
+    height: 10px;
+}
+
+.section::-webkit-scrollbar-track,
+.table-container::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 5px;
+    margin: 0 1rem;
+}
+
+.section::-webkit-scrollbar-thumb,
+.table-container::-webkit-scrollbar-thumb {
+    background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+    border-radius: 5px;
+    transition: background 0.3s ease;
+}
+
+.section::-webkit-scrollbar-thumb:hover,
+.table-container::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(90deg, #2563eb, #7c3aed);
+}
+
+/* Ensure tables don't shrink below readable width */
+.requests-table,
+table {
+    min-width: 1400px !important;
+    /* Increased for action buttons */
+    width: 100%;
+}
+
+/* For tables with many action buttons */
+.requests-table.wide,
+table.wide {
+    min-width: 1600px !important;
+}
+
+/* Sticky first column (optional - for ID column) */
+.requests-table th:first-child,
+.requests-table td:first-child {
+    position: sticky;
+    left: 0;
+    background: var(--card-bg, #1a1d2e);
+    z-index: 10;
+}
+
+.requests-table th:first-child {
+    z-index: 11;
+    /* Above sticky cells */
+}
+
+/* Add shadow to indicate scrollable content */
+.section::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 30px;
+    background: linear-gradient(to left, rgba(26, 29, 46, 0.8), transparent);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.section.has-scroll::after {
+    opacity: 1;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+
+    .requests-table,
+    table {
+        min-width: 900px;
+    }
+
+    .section::-webkit-scrollbar {
+        height: 6px;
+    }
+}
+
+/* Visual hint for horizontal scroll */
+.section {
+    position: relative;
+}
+
+.section.scrollable::before {
+    content: '← Glissez →';
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    padding: 0.5rem 1rem;
+    background: rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    border-radius: 0.5rem;
+    color: var(--accent-blue);
+    font-size: 0.75rem;
+    font-weight: 600;
+    opacity: 0.7;
+    pointer-events: none;
+    animation: fadeInOut 3s ease-in-out infinite;
+}
+
+@keyframes fadeInOut {
+
+    0%,
+    100% {
+        opacity: 0.3;
+    }
+
+    50% {
+        opacity: 0.8;
+    }
+}
+
+/* Hide scroll hint after first interaction */
+.section.scrolled::before {
+    display: none;
+}

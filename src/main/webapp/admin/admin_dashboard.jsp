@@ -1,0 +1,601 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+        <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+            <fmt:setLocale value="fr_FR" />
+            <!DOCTYPE html>
+            <html lang="fr">
+
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Administration - NeuroBank</title>
+
+                <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+                <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+                    rel="stylesheet">
+                <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+                <style>
+                    :root {
+                        --bg-dark: #0a0e1a;
+                        --bg-card: #131827;
+                        --bg-hover: #1a2234;
+                        --text-white: #ffffff;
+                        --text-gray: #94a3b8;
+                        --text-gray-light: #cbd5e1;
+                        --accent-blue: #3b82f6;
+                        --accent-blue-dark: #2563eb;
+                        --accent-purple: #8b5cf6;
+                        --success: #10b981;
+                        --warning: #f59e0b;
+                        --error: #ef4444;
+                        --border-dark: #1e293b;
+                    }
+
+                    *,
+                    *::before,
+                    *::after {
+                        box-sizing: border-box;
+                        margin: 0;
+                        padding: 0;
+                    }
+
+                    body {
+                        font-family: 'Inter', -apple-system, sans-serif;
+                        background: var(--bg-dark);
+                        color: var(--text-white);
+                        line-height: 1.6;
+                    }
+
+                    .animated-bg {
+                        position: fixed;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        pointer-events: none;
+                        z-index: 0;
+                    }
+
+                    .gradient-orb {
+                        position: absolute;
+                        border-radius: 50%;
+                        filter: blur(80px);
+                        opacity: 0.15;
+                        animation: float 20s infinite ease-in-out;
+                    }
+
+                    .orb-1 {
+                        width: 500px;
+                        height: 500px;
+                        background: var(--accent-blue);
+                        top: -100px;
+                        right: -100px;
+                    }
+
+                    .orb-2 {
+                        width: 400px;
+                        height: 400px;
+                        background: var(--accent-purple);
+                        bottom: -100px;
+                        left: -100px;
+                        animation-delay: -10s;
+                    }
+
+                    @keyframes float {
+
+                        0%,
+                        100% {
+                            transform: translate(0, 0) scale(1);
+                        }
+
+                        33% {
+                            transform: translate(30px, -30px) scale(1.1);
+                        }
+
+                        66% {
+                            transform: translate(-20px, 20px) scale(0.9);
+                        }
+                    }
+
+                    .dashboard-container {
+                        display: flex;
+                        min-height: 100vh;
+                        position: relative;
+                        z-index: 1;
+                    }
+
+                    .sidebar {
+                        width: 280px;
+                        background: rgba(19, 24, 39, 0.7);
+                        backdrop-filter: blur(20px);
+                        border-right: 1px solid var(--border-dark);
+                        padding: 2rem 1.5rem;
+                        position: fixed;
+                        height: 100vh;
+                        overflow-y: auto;
+                    }
+
+                    .logo {
+                        display: flex;
+                        align-items: center;
+                        gap: 0.75rem;
+                        margin-bottom: 2rem;
+                        padding-bottom: 1.5rem;
+                        border-bottom: 1px solid var(--border-dark);
+                    }
+
+                    .logo-icon {
+                        width: 45px;
+                        height: 45px;
+                        background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+                        border-radius: 0.75rem;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-size: 1.35rem;
+                        color: white;
+                    }
+
+                    .logo-text {
+                        font-size: 1.35rem;
+                        font-weight: 800;
+                        background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+                        -webkit-background-clip: text;
+                        -webkit-text-fill-color: transparent;
+                        background-clip: text;
+                    }
+
+                    .nav-links {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 0.5rem;
+                    }
+
+                    .nav-item {
+                        display: flex;
+                        align-items: center;
+                        gap: 0.875rem;
+                        padding: 1rem 1.25rem;
+                        color: var(--text-gray);
+                        text-decoration: none;
+                        border-radius: 0.75rem;
+                        transition: all 0.3s ease;
+                        font-weight: 500;
+                    }
+
+                    .nav-item:hover,
+                    .nav-item.active {
+                        background: rgba(59, 130, 246, 0.1);
+                        color: var(--accent-blue);
+                    }
+
+                    .nav-item.active {
+                        border-left: 3px solid var(--accent-blue);
+                    }
+
+                    .nav-item.logout {
+                        margin-top: 2rem;
+                        color: var(--error);
+                        border-top: 1px solid var(--border-dark);
+                        padding-top: 1.5rem;
+                    }
+
+                    .nav-item.logout:hover {
+                        background: rgba(239, 68, 68, 0.1);
+                    }
+
+                    .main-content {
+                        margin-left: 280px;
+                        flex: 1;
+                        padding: 2rem;
+                    }
+
+                    .page-header {
+                        margin-bottom: 2.5rem;
+                    }
+
+                    .page-title {
+                        font-size: 2rem;
+                        font-weight: 800;
+                        margin-bottom: 0.5rem;
+                    }
+
+                    .page-subtitle {
+                        color: var(--text-gray);
+                    }
+
+                    .stats-grid {
+                        display: grid;
+                        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+                        gap: 1.5rem;
+                        margin-bottom: 2.5rem;
+                    }
+
+                    .stat-card {
+                        background: rgba(19, 24, 39, 0.5);
+                        backdrop-filter: blur(10px);
+                        border: 1px solid var(--border-dark);
+                        border-radius: 1.25rem;
+                        padding: 1.5rem;
+                        transition: transform 0.3s ease;
+                    }
+
+                    .stat-card:hover {
+                        transform: translateY(-5px);
+                        border-color: var(--accent-blue);
+                    }
+
+                    .stat-header {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: flex-start;
+                        margin-bottom: 1rem;
+                    }
+
+                    .stat-icon {
+                        width: 40px;
+                        height: 40px;
+                        border-radius: 0.75rem;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-size: 1.25rem;
+                    }
+
+                    .stat-icon.blue {
+                        background: rgba(59, 130, 246, 0.1);
+                        color: var(--accent-blue);
+                    }
+
+                    .stat-icon.purple {
+                        background: rgba(139, 92, 246, 0.1);
+                        color: var(--accent-purple);
+                    }
+
+                    .stat-icon.green {
+                        background: rgba(16, 185, 129, 0.1);
+                        color: var(--success);
+                    }
+
+                    .stat-icon.orange {
+                        background: rgba(245, 158, 11, 0.1);
+                        color: var(--warning);
+                    }
+
+                    .stat-value {
+                        font-size: 2rem;
+                        font-weight: 800;
+                        margin-bottom: 0.25rem;
+                    }
+
+                    .stat-label {
+                        color: var(--text-gray);
+                        font-size: 0.9rem;
+                    }
+
+                    .health-section {
+                        background: rgba(19, 24, 39, 0.5);
+                        backdrop-filter: blur(10px);
+                        border: 1px solid var(--border-dark);
+                        border-radius: 1.25rem;
+                        padding: 2rem;
+                        margin-bottom: 2rem;
+                    }
+
+                    .section-header {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        margin-bottom: 1.5rem;
+                    }
+
+                    .section-title {
+                        font-size: 1.25rem;
+                        font-weight: 700;
+                    }
+
+                    .health-grid {
+                        display: grid;
+                        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                        gap: 2rem;
+                    }
+
+                    .health-item {
+                        background: rgba(255, 255, 255, 0.03);
+                        border-radius: 1rem;
+                        padding: 1.5rem;
+                    }
+
+                    .health-header {
+                        display: flex;
+                        justify-content: space-between;
+                        margin-bottom: 1rem;
+                    }
+
+                    .status-indicator {
+                        display: flex;
+                        align-items: center;
+                        gap: 0.5rem;
+                        font-weight: 600;
+                        font-size: 0.9rem;
+                    }
+
+                    .dot {
+                        width: 10px;
+                        height: 10px;
+                        border-radius: 50%;
+                        box-shadow: 0 0 10px currentColor;
+                    }
+
+                    .status-online {
+                        color: var(--success);
+                    }
+
+                    .status-offline {
+                        color: var(--error);
+                    }
+
+                    .progress-bar-container {
+                        width: 100%;
+                        height: 8px;
+                        background: rgba(255, 255, 255, 0.1);
+                        border-radius: 4px;
+                        overflow: hidden;
+                        margin-top: 1rem;
+                    }
+
+                    .progress-bar {
+                        height: 100%;
+                        background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+                        transition: width 0.5s ease;
+                    }
+
+                    .memory-details {
+                        display: flex;
+                        justify-content: space-between;
+                        margin-top: 0.5rem;
+                        font-size: 0.85rem;
+                        color: var(--text-gray);
+                    }
+                </style>
+            </head>
+
+            <body>
+                <div class="animated-bg">
+                    <div class="gradient-orb orb-1"></div>
+                    <div class="gradient-orb orb-2"></div>
+                </div>
+
+                <div class="dashboard-container">
+                    <aside class="sidebar">
+                        <div class="logo">
+                            <div class="logo-icon"><i class="fas fa-university"></i></div>
+                            <div class="logo-text">NeuroBank</div>
+                        </div>
+
+                        <div
+                            style="background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 0.75rem; padding: 0.875rem 1.25rem; margin-bottom: 2rem; display: flex; align-items: center; justify-content: space-between;">
+                            <span
+                                style="color: var(--text-gray-light); font-size: 0.85rem; font-weight: 500;">Rôle</span>
+                            <span
+                                style="background: rgba(245, 158, 11, 0.2); color: var(--warning); padding: 0.375rem 0.875rem; border-radius: 0.5rem; font-weight: 700; font-size: 0.875rem;">ADMIN</span>
+                        </div>
+
+                        <nav class="nav-links">
+                            <a href="${pageContext.request.contextPath}/admin/dashboard" class="nav-item active">
+                                <i class="fas fa-chart-pie"></i> Tableau de bord
+                            </a>
+                            <a href="${pageContext.request.contextPath}/admin/users" class="nav-item">
+                                <i class="fas fa-users"></i> Utilisateurs
+                            </a>
+                            <a href="${pageContext.request.contextPath}/admin/settings" class="nav-item">
+                                <i class="fas fa-cog"></i> Paramètres
+                            </a>
+                            <a href="${pageContext.request.contextPath}/logout" class="nav-item logout">
+                                <i class="fas fa-sign-out-alt"></i> Déconnexion
+                            </a>
+                        </nav>
+                    </aside>
+
+                    <main class="main-content">
+                        <div class="page-header">
+                            <h1 class="page-title">Vue d'ensemble</h1>
+                            <p class="page-subtitle">Bienvenue sur le panneau d'administration NeuroBank</p>
+                        </div>
+
+                        <!-- Global Stats -->
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-header">
+                                    <div class="stat-icon blue"><i class="fas fa-users"></i></div>
+                                </div>
+                                <div class="stat-value">${totalClients}</div>
+                                <div class="stat-label">Clients Inscrits</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-header">
+                                    <div class="stat-icon purple"><i class="fas fa-user-tie"></i></div>
+                                </div>
+                                <div class="stat-value">${totalAgents}</div>
+                                <div class="stat-label">Agents Actifs</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-header">
+                                    <div class="stat-icon orange"><i class="fas fa-file-invoice-dollar"></i></div>
+                                </div>
+                                <div class="stat-value">${totalDemandes}</div>
+                                <div class="stat-label">Demandes Totales</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-header">
+                                    <div class="stat-icon green"><i class="fas fa-coins"></i></div>
+                                </div>
+                                <div class="stat-value">
+                                    <fmt:formatNumber value="${totalVolumeAccorde}" type="number"
+                                        maxFractionDigits="0" />€
+                                </div>
+                                <div class="stat-label">Volume Accordé</div>
+                            </div>
+                        </div>
+
+                        <!-- Performance KPIs -->
+                        <h2 class="section-title" style="margin-bottom: 1.5rem; margin-top: 2rem;">Performance &
+                            Opérations</h2>
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-header">
+                                    <div class="stat-icon blue"><i class="fas fa-check-double"></i></div>
+                                </div>
+                                <div class="stat-value">${approvalRate}%</div>
+                                <div class="stat-label">Taux d'Approbation</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-header">
+                                    <div class="stat-icon green"><i class="fas fa-hand-holding-usd"></i></div>
+                                </div>
+                                <div class="stat-value">
+                                    <fmt:formatNumber value="${avgLoanAmount}" type="number" maxFractionDigits="0" />€
+                                </div>
+                                <div class="stat-label">Montant Moyen Accordé</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-header">
+                                    <div class="stat-icon purple"><i class="fas fa-clock"></i></div>
+                                </div>
+                                <div class="stat-value">${avgProcessingTime} j</div>
+                                <div class="stat-label">Temps Moyen Traitement</div>
+                            </div>
+                        </div>
+
+                        <!-- Charts Section -->
+                        <div class="health-section">
+                            <div class="section-header">
+                                <h2 class="section-title"><i class="fas fa-chart-bar"></i> Analyses Graphiques</h2>
+                            </div>
+                            <div class="health-grid">
+                                <div class="health-item" style="height: 300px; display: flex; justify-content: center;">
+                                    <canvas id="statusChart"></canvas>
+                                </div>
+                                <div class="health-item" style="height: 300px; display: flex; justify-content: center;">
+                                    <canvas id="typeChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+
+                        <script>
+                            const commonOptions = {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                plugins: {
+                                    legend: {
+                                        position: 'bottom',
+                                        labels: { color: '#94a3b8', padding: 20, font: { family: 'Inter' } }
+                                    }
+                                }
+                            };
+
+                            // Status Distribution (Doughnut)
+                            const ctxStatus = document.getElementById('statusChart').getContext('2d');
+                            new Chart(ctxStatus, {
+                                type: 'doughnut',
+                                data: {
+                                    labels: ['En Attente', 'Validé', 'Rejeté'],
+                                    datasets: [{
+                                        data: [${ chartPending }, ${ chartValidated }, ${ chartRejected }],
+                                        backgroundColor: ['#f59e0b', '#10b981', '#ef4444'],
+                                        borderWidth: 0,
+                                        hoverOffset: 4
+                                    }]
+                                },
+                                options: {
+                                    ...commonOptions,
+                                    cutout: '70%',
+                                    plugins: {
+                                        ...commonOptions.plugins,
+                                        title: { display: true, text: 'État des Demandes', color: '#fff', font: { size: 16 } }
+                                    }
+                                }
+                            });
+
+                            // Type Distribution (Bar)
+                            const ctxType = document.getElementById('typeChart').getContext('2d');
+                            new Chart(ctxType, {
+                                type: 'bar',
+                                data: {
+                                    labels: ['Immobilier', 'Automobile'],
+                                    datasets: [{
+                                        label: 'Nombre de demandes',
+                                        data: [${ chartImmo }, ${ chartAuto }],
+                                        backgroundColor: ['#3b82f6', '#8b5cf6'],
+                                        borderRadius: 6,
+                                        barThickness: 40
+                                    }]
+                                },
+                                options: {
+                                    ...commonOptions,
+                                    scales: {
+                                        y: {
+                                            beginAtZero: true,
+                                            grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                                            ticks: { color: '#94a3b8' }
+                                        },
+                                        x: {
+                                            grid: { display: false },
+                                            ticks: { color: '#94a3b8' }
+                                        }
+                                    },
+                                    plugins: {
+                                        ...commonOptions.plugins,
+                                        title: { display: true, text: 'Répartition par Type', color: '#fff', font: { size: 16 } },
+                                        legend: { display: false }
+                                    }
+                                }
+                            });
+                        </script>
+
+                        <!-- System Health -->
+                        <div class="health-section">
+                            <div class="section-header">
+                                <h2 class="section-title"><i class="fas fa-heartbeat"></i> État du Système</h2>
+                                <span class="status-indicator ${dbStatus ? 'status-online' : 'status-offline'}">
+                                    <div class="dot" style="background: currentColor;"></div>
+                                    ${dbStatus ? 'Système Opérationnel' : 'Problème Détecté'}
+                                </span>
+                            </div>
+
+                            <div class="health-grid">
+                                <div class="health-item">
+                                    <div class="health-header">
+                                        <span>Base de Données</span>
+                                        <span class="${dbStatus ? 'status-online' : 'status-offline'}">
+                                            <i
+                                                class="fas ${dbStatus ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
+                                            ${dbStatus ? 'Connecté' : 'Erreur'}
+                                        </span>
+                                    </div>
+                                    <p style="color: var(--text-gray); font-size: 0.9rem;">
+                                        Connexion active au serveur PostgreSQL.
+                                    </p>
+                                </div>
+
+                                <div class="health-item">
+                                    <div class="health-header">
+                                        <span>Mémoire Serveur (JVM)</span>
+                                        <span>${memoryUsagePercent}%</span>
+                                    </div>
+                                    <div class="progress-bar-container">
+                                        <div class="progress-bar" style="width: ${memoryUsagePercent}%;"></div>
+                                    </div>
+                                    <div class="memory-details">
+                                        <span>Utilisé: ${usedMemoryMB} MB</span>
+                                        <span>Total: ${totalMemoryMB} MB</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </main>
+                </div>
+            </body>
+
+            </html>
