@@ -1,6 +1,6 @@
 # NeuroBank (BankLoanProject)
 
-## Short Description
+## Description
 NeuroBank is a comprehensive web-based platform designed to manage and analyze bank loan applications. It integrates a Java-based enterprise backend with a Machine Learning Artificial Intelligence engine (Python/Flask) to automate loan risk assessment, providing bank agents with AI-driven recommendations based on an applicant's profile and loan parameters.
 
 ## Features
@@ -94,4 +94,4 @@ NeuroBank/
     Open your web browser and navigate to the application URL (usually `http://localhost:8080/BankLoanProject`).
 
 ## Author
-*Created and maintained by the NeuroBank Development Team.*
+*Ali Harti*
